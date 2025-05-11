@@ -4,7 +4,7 @@ Application to manage properties in Dublin. Atributes: login, spring security co
 
 ## Installation
 
-Download the files and run with any IDE, I use Sprin Toll Suite 4.
+Download the files and run with any IDE, I use Spring Toll Suite 4.
 
 ## Usage
 
