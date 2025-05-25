@@ -8,4 +8,4 @@ Download the files and run with any IDE, I use Spring Toll Suite 4.
 
 ## Usage
 
-You can register your user, at the moment all has the same role (admin), after that you can register your properties, schedule maintenance or receive rent payment.
+You can register your user as an Admin or Renter, after that you can register your properties, schedule maintenance. As an Admin role you can delete renters.
