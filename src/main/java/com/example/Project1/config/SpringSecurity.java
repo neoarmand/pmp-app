@@ -50,8 +50,15 @@ public class SpringSecurity {
 						"/showNewPropertyForm/**",
 						"/showFormForUpdate/**",
 						"/deleteProperty/**",
-						"/saveProperty/**"
-						).hasRole("ADMIN"))
+						"/saveProperty/**",
+						"/maintenance/**",
+						"/showNewProblemForm/**",
+						"/showFormForUpdatePro/**",
+						"/deleteProblem/**",
+						"/saveProblem/**",
+						"/renters/**",
+						"/deleteRenter/**"
+						).hasAnyRole("ADMIN", "RENTER"))
 				.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/", true)
 						.permitAll())
 				.logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll());

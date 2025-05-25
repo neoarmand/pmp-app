@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.example.Project1.models.Property;
 import com.example.Project1.services.PropertyService;
 
 @Controller
+
 public class PropertyController {
 
 	@Autowired
@@ -27,7 +27,7 @@ public class PropertyController {
 	}
 
 	@GetMapping("/showNewPropertyForm")
-	public String showNewEmployeeForm(Model model) {
+	public String showNewPropertyForm(Model model) {
 		Property property = new Property();
 		model.addAttribute("property", property);
 		return "new_property";

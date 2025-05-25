@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.Project1.dto.UserDto;
@@ -24,12 +25,12 @@ public class AuthController {
 		super();
 		this.userService = userService;
 	}
-	// handler method to handle home page request
+
     @GetMapping("/index")
     public String home(){
         return "index";
     }
- // handler method to handle user registration form request
+
     @GetMapping("/register")
     public String showRegistrationForm(Model model){
         // create model object to store form data
@@ -37,7 +38,7 @@ public class AuthController {
         model.addAttribute("user", user);
         return "register";
     }
- // handler method to handle user registration form submit request
+
     @PostMapping("/register/save")
     public String registration(@Valid @ModelAttribute("user") UserDto userDto,
                                BindingResult result,
@@ -65,7 +66,19 @@ public class AuthController {
         return "users";
     }
     
-    // handler method to handle login request
+    @GetMapping("/renters")
+    public String renters(Model model){
+        List<UserDto> renters = userService.findAllRenters();
+        model.addAttribute("renters", renters);
+        return "renters"; 
+    }
+
+    @GetMapping("/deleteRenter/{id}")
+    public String deleteRenter(@PathVariable(value = "id") long id) {
+        userService.deleteUserById(id);
+        return "redirect:/renters";
+    }
+
     @GetMapping("/login")
     public String login(){
         return "login";

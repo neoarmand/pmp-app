@@ -38,14 +38,14 @@
 							</a>
 						</li>
 						<li class="sidebar-item">
-							<a href="mantainance.html" class="sidebar-link">
+							<a th:href="@{/maintenance}" class="sidebar-link">
 								Maintenance
 							</a>
 						</li>
 					</ul>
 				</li>
 				<li class="sidebar-item">
-					<a href="#" class="sidebar-link">
+					<a th:href="@{/renters}" class="sidebar-link">
 						<i class='bx bx-body'></i>
 						<span>Renters</span>
 					</a>
@@ -140,19 +140,24 @@
 				<div class="container-fluid">
 					<div class="mb-3">
 						<h3 class="fw-bold fs-4 mb-3 text-center">
-							Register a new property
+							Register a new problem
 						</h3>
 						<div class="row justify-content-center">
 							<div class="col-md-8 col-lg-6">
-								<form th:action="@{/saveProperty}" th:object="${property}" method="POST">
-									<input type="text" th:field="*{propertyName}" placeholder="Property Name"
+								<form th:action="@{/maintenance/saveProblem}" th:object="${problem}" method="POST">
+									<select th:field="*{property}" class="form-control mb-4 rounded-0" required>
+										<option value="" disabled selected>-- Select Property --</option>
+										<option th:each="property : ${properties}" th:value="${property.id}"
+											th:text="${property.propertyName}">Property</option>
+									</select>
+									<input type="text" th:field="*{registerDate}" placeholder="Register date"
 										class="form-control mb-4 rounded-0">
+									<input type="text" th:field="*{descriptionProblem}"
+										placeholder="Description problem" class="form-control mb-4 rounded-0">
 									<input type="text" th:field="*{status}" placeholder="Status"
 										class="form-control mb-4 rounded-0">
-									<input type="text" th:field="*{acquisitionDate}" placeholder="Acquisition Date"
-										class="form-control mb-4 rounded-0">
 									<div class="d-flex justify-content-center">
-										<button type="submit" class="btn btn-register col-6 rounded-0">Register</button>
+										<button type="submit" class="btn btn-register col-6 rounded-0">Report</button>
 									</div>
 								</form>
 							</div>

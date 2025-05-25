@@ -1,10 +1,13 @@
 package com.example.Project1.models;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,9 +28,19 @@ public class Property {
 	    @Column (name = "acquisition_date")
 	    private String acquisitionDate;
 	    
+	    @OneToMany(mappedBy = "property") 
+	    private List<Problem> problems;
 
 	    public String getPropertyName() {
 			return propertyName;
+		}
+
+		public List<Problem> getProblems() {
+			return problems;
+		}
+
+		public void setProblems(List<Problem> problems) {
+			this.problems = problems;
 		}
 
 		public void setPropertyName(String propertyName) {
@@ -57,5 +70,4 @@ public class Property {
 	    public void setId(long id) {
 	        this.id = id;
 	    }
-
 }

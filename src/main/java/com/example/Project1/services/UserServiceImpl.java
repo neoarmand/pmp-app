@@ -10,11 +10,9 @@ import com.example.Project1.models.User;
 import com.example.Project1.repositories.RoleRepository;
 import com.example.Project1.repositories.UserRepository;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -36,14 +34,12 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setName(userDto.getFirstName() + " " + userDto.getLastName());
         user.setEmail(userDto.getEmail());
-        // encrypt the password using spring security
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        Role role = roleRepository.findByName("ROLE_ADMIN");
-        if(role == null){
-            role = checkRoleExist();
-        }
-        user.setRoles(Arrays.asList(role));
+        String selectedRoleName = userDto.getSelectedRole();
+        Role role = checkRoleExist(selectedRoleName);
+
+        user.setRoles(Collections.singletonList(role));
         userRepository.save(user);
     }
 
@@ -59,6 +55,21 @@ public class UserServiceImpl implements UserService {
                 .map((user) -> mapToUserDto(user))
                 .collect(Collectors.toList());
     }
+    
+    @Override
+    public List<UserDto> findAllRenters() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .filter(user -> user.getRoles().stream()
+                        .anyMatch(role -> role.getName().equals("ROLE_RENTER")))
+                .map(this::mapToUserDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteUserById(long id) {
+        this.userRepository.deleteById(id);
+    }
 
     private UserDto mapToUserDto(User user){
         UserDto userDto = new UserDto();
@@ -69,9 +80,13 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
-    private Role checkRoleExist(){
-        Role role = new Role();
-        role.setName("ROLE_ADMIN");
-        return roleRepository.save(role);
+    private Role checkRoleExist(String roleName) {
+        Role role = roleRepository.findByName(roleName);
+        if (role == null) {
+            role = new Role();
+            role.setName(roleName);
+            role = roleRepository.save(role);
+        }
+        return role;
     }
 }

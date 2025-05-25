@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
+	
 	private Long id;
 	@NotEmpty
 	private String firstName;
@@ -18,6 +19,16 @@ public class UserDto {
 	private String email;
 	@NotEmpty(message = "Password should not be empty")
 	private String password;
+	private String selectedRole;
+
+	
+	public String getSelectedRole() {
+		return selectedRole;
+	}
+
+	public void setSelectedRole(String selectedRole) {
+		this.selectedRole = selectedRole;
+	}
 
 	public Long getId() {
 		return id;

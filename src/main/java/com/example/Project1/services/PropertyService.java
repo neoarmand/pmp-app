@@ -17,4 +17,5 @@ public interface PropertyService {
     void deletePropertyById(long id);
     
     Page<Property> findPaginated(int pageNo,int pageSize,String sortField,String sortDirection);
+    
 }
